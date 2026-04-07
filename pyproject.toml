@@ -1,0 +1,129 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "qnet"
+version = "1.0.0"
+description = "Quantum-Decentralized Networking Protocol & Simulator"
+readme = "README.md"
+license = {text = "MIT"}
+authors = [
+    {name = "QNet Development Team", email = "dev@qnet.io"}
+]
+keywords = [
+    "quantum",
+    "networking",
+    "simulation",
+    "decentralized",
+    "quantum-cryptography",
+    "quantum-entanglement",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Physics",
+    "Topic :: System :: Networking",
+]
+
+dependencies = [
+    "numpy>=1.24.0",
+    "scipy>=1.11.0",
+    "pydantic>=2.0.0",
+    "pyyaml>=6.0.0",
+    "click>=8.1.0",
+    "rich>=13.0.0",
+    "redis>=4.5.0",
+    "asyncpg>=0.28.0",
+    "fastapi>=0.104.0",
+    "uvicorn>=0.24.0",
+    "websockets>=12.0",
+    "sqlalchemy>=2.0.0",
+    "alembic>=1.12.0",
+    "python-dotenv>=1.0.0",
+    "httpx>=0.25.0",
+    "networkx>=3.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.0",
+    "pytest-asyncio>=0.21.0",
+    "pytest-cov>=4.1.0",
+    "pytest-mock>=3.11.0",
+    "black>=23.0.0",
+    "isort>=5.12.0",
+    "mypy>=1.5.0",
+    "ruff>=0.1.0",
+    "pre-commit>=3.3.0",
+]
+dashboard = [
+    "react>=18.0.0",
+    "next>=14.0.0",
+    "d3>=7.0.0",
+    "three>=0.160.0",
+    "@types/node>=20.0.0",
+    "@types/react>=18.0.0",
+    "typescript>=5.0.0",
+]
+
+[project.scripts]
+qnet = "qnet.cli.commands:cli"
+
+[project.urls]
+Homepage = "https://github.com/qnet/qnet"
+Documentation = "https://qnet.readthedocs.io"
+Repository = "https://github.com/qnet/qnet.git"
+Issues = "https://github.com/qnet/qnet/issues"
+
+[tool.setuptools]
+packages = ["qnet", "qnet.core", "qnet.cli", "qnet.api", "qnet.ai", "qnet.security"]
+
+[tool.setuptools.package-data]
+qnet = ["py.typed"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_functions = ["test_*"]
+asyncio_mode = "auto"
+addopts = "-v --tb=short"
+
+[tool.coverage.run]
+source = ["qnet"]
+omit = ["tests/*", "**/__pycache__/*"]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if __name__ == .__main__.:",
+]
+
+[tool.black]
+line-length = 100
+target-version = ["py311"]
+include = '\.pyi?$'
+
+[tool.isort]
+profile = "black"
+line_length = 100
+
+[tool.mypy]
+python_version = "3.11"
+warn_return_any = true
+warn_unused_configs = true
+ignore_missing_imports = true
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+select = ["E", "F", "W", "I", "N", "UP", "B", "C4"]
+ignore = ["E501"]

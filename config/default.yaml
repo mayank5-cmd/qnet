@@ -1,0 +1,135 @@
+# QNet Configuration File
+# Quantum-Decentralized Network Simulator
+
+simulation:
+  # Number of nodes to simulate (10 - 100,000)
+  node_count: 100
+  # Simulation duration in seconds (0 = infinite)
+  duration: 60
+  # Time step for simulation events (milliseconds)
+  time_step: 10
+  # Enable real-time visualization
+  real_time: true
+  # Random seed for reproducibility (0 = random)
+  seed: 42
+
+quantum:
+  # Maximum qubits per node
+  max_qubits_per_node: 1000
+  # Entanglement fidelity threshold
+  entanglement_threshold: 0.85
+  # Decoherence time constant (microseconds)
+  decoherence_time: 1000
+  # Gate fidelity
+  gate_fidelity: 0.99
+  # Measurement fidelity
+  measurement_fidelity: 0.95
+  # Quantum channel loss rate
+  channel_loss_rate: 0.01
+
+network:
+  # Network topology type: mesh, star, ring, scale_free, random, custom
+  topology: scale_free
+  # Average connections per node
+  avg_connections: 4
+  # Enable quantum links (vs classical only)
+  quantum_links_enabled: true
+  # Percentage of links that are quantum
+  quantum_link_ratio: 0.3
+  # Link latency base (milliseconds)
+  base_latency: 5
+  # Link latency variance
+  latency_variance: 2
+  # Packet loss rate (0.0 - 1.0)
+  packet_loss_rate: 0.001
+
+routing:
+  # Routing algorithm: dijkstra, a_star, q_learning, genetic, hybrid
+  algorithm: q_learning
+  # Enable adaptive routing
+  adaptive_routing: true
+  # Routing update interval (milliseconds)
+  update_interval: 100
+  # Maximum path length
+  max_path_length: 50
+
+security:
+  # Enable QKD
+  qkd_enabled: true
+  # QKD Protocol: bb84, e91, sift
+  qkd_protocol: bb84
+  # Key refresh interval (seconds)
+  key_refresh_interval: 300
+  # Enable attack simulation
+  attack_simulation: false
+  # Eavesdropping detection sensitivity
+  eavesdropping_sensitivity: 0.1
+
+ai:
+  # Enable AI-based optimization
+  ai_enabled: true
+  # AI learning rate
+  learning_rate: 0.1
+  # AI exploration rate
+  exploration_rate: 0.2
+  # Enable traffic prediction
+  traffic_prediction: true
+  # Prediction window (seconds)
+  prediction_window: 60
+  # Enable self-healing
+  self_healing: true
+  # Failure detection threshold
+  failure_threshold: 0.05
+
+api:
+  # REST API host
+  host: 0.0.0.0
+  # REST API port
+  port: 8000
+  # WebSocket port
+  ws_port: 8001
+  # API rate limit (requests per minute)
+  rate_limit: 1000
+  # Enable CORS
+  cors_enabled: true
+
+database:
+  # PostgreSQL connection
+  postgres:
+    host: localhost
+    port: 5432
+    database: qnet
+    username: qnet
+    password: qnet_secret
+    pool_size: 20
+  # Redis connection
+  redis:
+    host: localhost
+    port: 6379
+    db: 0
+    password: null
+    max_connections: 50
+
+logging:
+  # Log level: DEBUG, INFO, WARNING, ERROR, CRITICAL
+  level: INFO
+  # Log file path
+  file: logs/qnet.log
+  # Console output
+  console: true
+  # JSON format
+  json_format: false
+
+visualization:
+  # Dashboard host
+  dashboard_host: 0.0.0.0
+  # Dashboard port
+  dashboard_port: 3000
+  # Animation frame rate
+  frame_rate: 60
+  # Enable 3D visualization
+  use_3d: false
+  # Node label display
+  show_labels: true
+  # Link weight display
+  show_weights: false

@@ -1,0 +1,76 @@
+# QNet Docker Compose for Production
+version: '3.8'
+
+services:
+  api:
+    image: qnet/api:latest
+    container_name: qnet-api
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
+      - POSTGRES_DB=qnet
+      - POSTGRES_USER=qnet
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_DB=0
+      - SECRET_KEY=${SECRET_KEY}
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    networks:
+      - qnet-network
+    volumes:
+      - ./config:/app/config:ro
+
+  frontend:
+    image: qnet/frontend:latest
+    container_name: qnet-frontend
+    restart: unless-stopped
+    ports:
+      - "80:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=https://api.example.com
+      - NEXT_PUBLIC_WS_URL=wss://api.example.com
+    networks:
+      - qnet-network
+
+  postgres:
+    image: postgres:15-alpine
+    container_name: qnet-postgres
+    restart: unless-stopped
+    environment:
+      - POSTGRES_DB=qnet
+      - POSTGRES_USER=qnet
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U qnet"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - qnet-network
+
+  redis:
+    image: redis:7-alpine
+    container_name: qnet-redis
+    restart: unless-stopped
+    volumes:
+      - redis-data:/data
+    networks:
+      - qnet-network
+
+networks:
+  qnet-network:
+    driver: bridge
+
+volumes:
+  postgres-data:
+  redis-data:
